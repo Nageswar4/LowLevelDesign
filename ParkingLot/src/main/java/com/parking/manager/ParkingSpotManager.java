@@ -108,4 +108,41 @@ public class ParkingSpotManager {
 
 	}
 
+	public boolean unParkingSpot(ParkingSpot parkingSpot, Vehicle vehicle) {
+
+		ParkingFloor parkingFloor = this.floorMapping.get(parkingSpot.getFloorId());
+		try {
+			Map<String, ParkingSpot> map = parkingFloor.getParkingSpots(vehicle.getVehicleType());
+			ParkingSpot parkingspot = map.getOrDefault(parkingSpot.getParkingSpotId(), null);
+			if (parkingspot == null)
+				return false;
+			synchronized (parkingspot) {
+				if (!parkingspot.isEmpty()) {
+					parkingspot.setEmpty(true);
+					parkingspot.setVehicleId(null);
+					synchronized (parkingFloor) {
+						if (vehicle.getVehicleType().equals(VehicleType.FOUR_WHEELER)) {
+							parkingFloor.setFourWheelerBookedCount(parkingFloor.getFourWheelerBookedCount() > 0
+									? parkingFloor.getFourWheelerBookedCount() - 1
+									: 0);
+						} else {
+							parkingFloor.setTwoWheelerBookedCount(parkingFloor.getTwoWheelerBookedCount() > 0
+									? parkingFloor.getTwoWheelerBookedCount() - 1
+									: 0);
+						}
+					}
+
+					return true;
+
+				}
+			}
+
+		} catch (NoVehicleTypeFoundException e) {
+
+			e.printStackTrace();
+		}
+		return false;
+
+	}
+
 }
