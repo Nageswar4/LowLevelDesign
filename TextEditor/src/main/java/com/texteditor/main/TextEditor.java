@@ -59,4 +59,12 @@ public class TextEditor {
 		return characterData.getStyle();
 	}
 
+	public void print() {
+		for (List<CharacterWithStyle> list : document) {
+			for (CharacterWithStyle data : list) {
+				System.out.println(data.getCharcater());
+			}
+		}
+	}
+
 }
