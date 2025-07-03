@@ -115,7 +115,6 @@ public class LruLfuCache {
 			update(cache);
 			return;
 		}
-
 		if (linkedHashMap.size() >= capacity) {
 			Map.Entry<Integer, Cache> map = linkedHashMap.entrySet().iterator().next();
 			if (!isValid(map.getValue())) {
