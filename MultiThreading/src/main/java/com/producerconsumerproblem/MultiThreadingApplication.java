@@ -17,7 +17,6 @@ public class MultiThreadingApplication {
 
 		return ars -> {
 			MessageQueue queue = new MessageQueue(5);
-
 			Producer pr = new Producer(queue);
 			Thread t1 = new Thread(pr);
 			Consumer cs = new Consumer(queue);
