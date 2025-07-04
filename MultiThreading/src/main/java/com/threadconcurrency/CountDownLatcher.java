@@ -13,7 +13,6 @@ public class CountDownLatcher {
 		Runnable task = () -> {
 			System.out.println("Thread Name is: " + Thread.currentThread().getName());
 			latcher.countDown();
-
 		};
 
 		for (int i = 0; i < 3; i++) {
